@@ -1,13 +1,9 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
+export default function App() {
+  return (
+    <div className="relative min-h-screen bg-navy-950 text-slate-100 dark:bg-navy-950 light:bg-slate-50">
+      
+    </div>
+  );
 }
-
-export default App;
