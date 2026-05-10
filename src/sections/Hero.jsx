@@ -75,7 +75,7 @@ function Avatar() {
             <img
               src={PERSONAL.photo}
               alt={PERSONAL.name}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-55 object-cover transition-transform duration-700 hover:scale-105"
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-navy-800 to-navy-950 flex items-center justify-center">

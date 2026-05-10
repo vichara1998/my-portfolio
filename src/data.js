@@ -8,7 +8,7 @@ export const PERSONAL = {
   phone: "+94 76 156 3214",
   location: "Bandarawela, Sri Lanka",
   availability: "Actively Seeking Internship Opportunities",
-  photo: null,
+  photo: "../src/assets/profile.jpg",
   // resumeUrl:
   //   "https://drive.google.com/file/d/1eHqeKbNiDKFND9JOyaOM8_21mNP7WbBY/view?usp=sharing",
   resumeUrl: "/Vichara Tharkana_CV.pdf",
