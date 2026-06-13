@@ -1,9 +1,10 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Github, ExternalLink, Star } from 'lucide-react'
-import { PROJECTS } from '../data'
+import { Github, ExternalLink, Star, ArrowUpRight, Calendar } from 'lucide-react'
+import { PROJECTS, PERSONAL } from '../data'
+import ProjectModal from '../components/ProjectModal'
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index, onOpen }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -13,7 +14,8 @@ function ProjectCard({ project, index }) {
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group gradient-border relative p-[1px] rounded-2xl card-hover"
+      onClick={() => onOpen(project)}
+      className="group gradient-border relative p-[1px] rounded-2xl card-hover cursor-pointer"
     >
       <div className="h-full rounded-2xl bg-navy-900 hover:bg-navy-800/80 overflow-hidden transition-colors duration-300">
         {/* Project visual header */}
@@ -26,38 +28,48 @@ function ProjectCard({ project, index }) {
 
           {/* Glowing orb */}
           <div
-            className="absolute w-32 h-32 rounded-full blur-3xl opacity-30"
+            className="absolute w-32 h-32 rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"
             style={{ background: project.color }}
           />
 
           {/* Emoji icon */}
-          <div className="relative text-6xl filter drop-shadow-lg">{project.emoji}</div>
+          <div className="relative text-6xl filter drop-shadow-lg transition-transform duration-500 group-hover:scale-110">
+            {project.emoji}
+          </div>
 
-          {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-navy-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-medium transition-all"
+          {/* Overlay on hover — click to view details */}
+          <div className="absolute inset-0 bg-navy-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
+            <div
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+              style={{ background: project.color + '25', borderColor: project.color + '60', border: '1px solid', color: project.color }}
             >
-              <Github size={15} />
-              Code
-            </a>
-            {project.demo && (
+              <ArrowUpRight size={15} />
+              View Full Details
+            </div>
+            <div className="flex items-center gap-3">
               <a
-                href={project.demo}
+                href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                style={{ background: project.color + '30', borderColor: project.color + '60', border: '1px solid', color: project.color }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-medium transition-all"
               >
-                <ExternalLink size={15} />
-                Live Demo
+                <Github size={13} />
+                Code
               </a>
-            )}
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-medium transition-all"
+                >
+                  <ExternalLink size={13} />
+                  Demo
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Featured badge */}
@@ -65,6 +77,14 @@ function ProjectCard({ project, index }) {
             <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-medium">
               <Star size={11} fill="currentColor" />
               Featured
+            </div>
+          )}
+
+          {/* Year badge */}
+          {project.year && (
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-navy-950/50 border border-white/10 text-slate-300 text-xs font-mono">
+              <Calendar size={11} />
+              {project.year}
             </div>
           )}
         </div>
@@ -97,6 +117,7 @@ function ProjectCard({ project, index }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-electric-400 transition-colors"
           >
             <Github size={13} />
@@ -109,6 +130,7 @@ function ProjectCard({ project, index }) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
                 className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-teal-400 transition-colors"
               >
                 <ExternalLink size={13} />
@@ -116,6 +138,11 @@ function ProjectCard({ project, index }) {
               </a>
             </>
           )}
+          <span className="text-slate-700">·</span>
+          <span className="flex items-center gap-1.5 text-xs text-slate-500 group-hover:text-violet-400 transition-colors">
+            <ArrowUpRight size={13} />
+            Full Details
+          </span>
         </div>
       </div>
     </motion.div>
@@ -125,6 +152,7 @@ function ProjectCard({ project, index }) {
 export default function Projects() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
+  const [activeProject, setActiveProject] = useState(null)
 
   return (
     <section id="projects" className="py-24 md:py-32 relative">
@@ -148,14 +176,14 @@ export default function Projects() {
             Things I've <span className="gradient-text">built</span>
           </h2>
           <p className="text-slate-400 mt-4 max-w-xl">
-            A selection of projects ranging from production systems to weekend experiments. Each one taught me something new.
+            A selection of projects spanning AI, mobile, web, and IoT. Click any card to explore the full breakdown — tech stack, highlights, and screenshots.
           </p>
         </motion.div>
 
         {/* Project Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ProjectCard key={project.id} project={project} index={i} onOpen={setActiveProject} />
           ))}
         </div>
 
@@ -167,7 +195,7 @@ export default function Projects() {
           className="text-center mt-12"
         >
           <a
-            href="https://github.com/alexchen"
+            href={PERSONAL.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-slate-400 hover:text-electric-400 text-sm font-medium transition-colors group"
@@ -178,6 +206,9 @@ export default function Projects() {
           </a>
         </motion.div>
       </div>
+
+      {/* Project detail modal */}
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </section>
   )
 }
