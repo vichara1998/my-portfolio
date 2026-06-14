@@ -108,7 +108,7 @@ export default function Contact() {
           </h2>
           <p className="text-slate-400 mt-4 max-w-xl">
             Whether you have an opportunity, a project idea, or just want to
-            talk code — my inbox is always open.
+            talk code, my inbox is always open.
           </p>
         </motion.div>
 
