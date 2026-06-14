@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
-/**
- * Hook to detect which section is currently in view for active nav highlighting
- */
+
 export function useScrollSpy(sectionIds, offset = 100) {
   const [activeSection, setActiveSection] = useState('')
 

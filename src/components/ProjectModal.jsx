@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Github, ExternalLink, ImageOff, Calendar, CheckCircle2 } from 'lucide-react'
 
-
+/**
+ * Full-screen modal showing detailed project info:
+ * description, tech stack, highlights, and screenshots.
+ */
 export default function ProjectModal({ project, onClose }) {
   if (!project) return null
 

@@ -1,12 +1,18 @@
-import { useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
-import { Github, ExternalLink, Star, ArrowUpRight, Calendar } from 'lucide-react'
-import { PROJECTS, PERSONAL } from '../data'
-import ProjectModal from '../components/ProjectModal'
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import {
+  Github,
+  ExternalLink,
+  Star,
+  ArrowUpRight,
+  Calendar,
+} from "lucide-react";
+import { PROJECTS, PERSONAL } from "../data";
+import ProjectModal from "../components/ProjectModal";
 
 function ProjectCard({ project, index, onOpen }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <motion.div
@@ -21,7 +27,9 @@ function ProjectCard({ project, index, onOpen }) {
         {/* Project visual header */}
         <div
           className="relative h-44 overflow-hidden flex items-center justify-center"
-          style={{ background: `linear-gradient(135deg, ${project.color}15, ${project.color}05)` }}
+          style={{
+            background: `linear-gradient(135deg, ${project.color}15, ${project.color}05)`,
+          }}
         >
           {/* Abstract background pattern */}
           <div className="absolute inset-0 grid-pattern opacity-30" />
@@ -41,7 +49,12 @@ function ProjectCard({ project, index, onOpen }) {
           <div className="absolute inset-0 bg-navy-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
             <div
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-              style={{ background: project.color + '25', borderColor: project.color + '60', border: '1px solid', color: project.color }}
+              style={{
+                background: project.color + "25",
+                borderColor: project.color + "60",
+                border: "1px solid",
+                color: project.color,
+              }}
             >
               <ArrowUpRight size={15} />
               View Full Details
@@ -146,13 +159,13 @@ function ProjectCard({ project, index, onOpen }) {
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export default function Projects() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-100px' })
-  const [activeProject, setActiveProject] = useState(null)
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeProject, setActiveProject] = useState(null);
 
   return (
     <section id="projects" className="py-24 md:py-32 relative">
@@ -168,22 +181,33 @@ export default function Projects() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-electric-400 font-mono text-sm font-medium">03.</span>
-            <span className="text-slate-500 text-sm font-medium uppercase tracking-widest">Projects</span>
+            <span className="text-electric-400 font-mono text-sm font-medium">
+              03.
+            </span>
+            <span className="text-slate-500 text-sm font-medium uppercase tracking-widest">
+              Projects
+            </span>
             <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
           </div>
           <h2 className="section-title text-white">
             Things I've <span className="gradient-text">built</span>
           </h2>
           <p className="text-slate-400 mt-4 max-w-xl">
-            A selection of projects spanning AI, mobile, web, and IoT. Click any card to explore the full breakdown — tech stack, highlights, and screenshots.
+            A selection of projects spanning AI, mobile, web, and IoT. Click any
+            card to explore the full breakdown — tech stack, highlights, and
+            screenshots.
           </p>
         </motion.div>
 
         {/* Project Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} onOpen={setActiveProject} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+              onOpen={setActiveProject}
+            />
           ))}
         </div>
 
@@ -202,13 +226,19 @@ export default function Projects() {
           >
             <Github size={16} />
             See more on GitHub
-            <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ExternalLink
+              size={13}
+              className="opacity-0 group-hover:opacity-100 transition-opacity"
+            />
           </a>
         </motion.div>
       </div>
 
       {/* Project detail modal */}
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <ProjectModal
+        project={activeProject}
+        onClose={() => setActiveProject(null)}
+      />
     </section>
-  )
+  );
 }
